@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'login-page.dart';
+import 'features/auth/presentation/pages/home_page.dart';
+import 'features/auth/presentation/pages/login_page.dart';
 
 class SusTransApp extends StatelessWidget {
   const SusTransApp({Key? key}) : super(key: key);
@@ -20,6 +21,9 @@ class SusTransApp extends StatelessWidget {
           backgroundColor: Colors.transparent,
         ),
         initialRoute: "/",
-        routes: {"/login": (context) => LoginPage()});
+        routes: {
+          "/": (context) => LoginPage(),
+          "/home": (context) => HomePage()
+        });
   }
 }
