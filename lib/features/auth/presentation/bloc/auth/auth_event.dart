@@ -9,3 +9,7 @@ class LoginEvent extends AuthEvent {
 
   LoginEvent({required this.codUsuario, required this.password});
 }
+
+class LogoutEvent extends AuthEvent {
+  LogoutEvent();
+}

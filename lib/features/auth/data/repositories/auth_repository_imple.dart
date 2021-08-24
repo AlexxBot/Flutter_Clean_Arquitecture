@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:sup_transp_app/core/error/exceptions.dart';
 import 'package:sup_transp_app/core/error/failures.dart';
 import 'package:dartz/dartz.dart';
+import 'package:sup_transp_app/core/network/headers.dart';
 import 'package:sup_transp_app/core/network/network_info.dart';
 import 'package:sup_transp_app/features/auth/data/datasources/auth_remote_data.dart';
 import 'package:sup_transp_app/features/auth/data/models/usuario.dart';
 import 'package:sup_transp_app/features/auth/domain/repositories/auth_repository.dart';
+import 'package:sup_transp_app/injection_container.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteData remoteDataSource;
@@ -22,6 +26,7 @@ class AuthRepositoryImpl implements AuthRepository {
     if (await networkInfo.isConnected) {
       try {
         final token = await remoteDataSource.login(codUsuario, password);
+        sl<Headers>().addHeader("x-token", token);
         return Right(token);
       } on ServerException {
         return Left(ServerFailure());

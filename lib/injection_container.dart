@@ -1,6 +1,7 @@
 //import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:sup_transp_app/core/network/headers.dart';
 import 'package:sup_transp_app/core/utils/crypto.dart';
 import 'package:sup_transp_app/features/auth/domain/usecases/auth_use_case.dart';
 //import 'package:shared_preferences/shared_preferences.dart';
@@ -18,14 +19,20 @@ Future<void> init() async {
   //! Features - Number Trivia
   // Bloc
   sl.registerFactory(
-    () => AuthBloc(authUseCase: sl(), cryptoConverter: sl()
+    () => AuthBloc(
+        authUseCase: sl(),
+        cryptoConverter:
+            sl() // se crea una nueva instancia cada vez que se llama
         /* inputConverter: sl(),
       random: sl(), */
         ),
   );
+  //para los headers que va a a ser configurables prinnipalmente por los tokens
+  sl.registerLazySingleton(() => Headers());
 
   // Use cases
-  sl.registerLazySingleton(() => AuthUseCase(sl()));
+  sl.registerLazySingleton(
+      () => AuthUseCase(sl())); //se inicializa en la primera llamada
   //sl.registerLazySingleton(() => GetRandomNumberTrivia(sl()));
 
   // Repository

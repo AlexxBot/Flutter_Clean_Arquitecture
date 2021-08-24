@@ -9,9 +9,15 @@ class AuthInitial extends AuthState {}
 
 class LoadingState extends AuthState {}
 
-class LoggedState extends AuthState {
+class LoggedInState extends AuthState {
   final String token;
-  LoggedState({required  this.token });
+  LoggedInState({required this.token});
+}
+
+class LoggedOutState extends AuthState {
+  final String usuario;
+
+  LoggedOutState({required this.usuario});
 }
 
 class ErrorState extends AuthState {

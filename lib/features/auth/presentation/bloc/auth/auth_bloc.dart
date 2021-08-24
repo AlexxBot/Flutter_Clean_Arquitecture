@@ -22,6 +22,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   /* @override
   AuthState get initialState => AuthInitial(); */
 
+  String? codUsuario;
+
   @override
   Stream<AuthState> mapEventToState(
     AuthEvent event,
@@ -34,10 +36,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         yield ErrorState(message: INVALID_PASSWORD_MESSAGE);
       }, (string) async* {
         //yield LoadingState();
+        this.codUsuario = event.codUsuario;
         final failureOrtoken = await authUseCase.login(
             Params(codUsuario: event.codUsuario, password: event.password));
         yield* _eitherLoadedOrErrorState(failureOrtoken);
       });
+    }
+
+    if (event is LogoutEvent) {
+      this.codUsuario = "ninguno";
+      yield LoggedOutState(usuario: "ninguno");
     }
   }
 
@@ -46,7 +54,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async* {
     yield failureOrUsuario.fold(
       (failure) => ErrorState(message: _mapFailureToMessage(failure)),
-      (token) => LoggedState(token: token),
+      (token) => LoggedInState(token: token),
     );
   }
 

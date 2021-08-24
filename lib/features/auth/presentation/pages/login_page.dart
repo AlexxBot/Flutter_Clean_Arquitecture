@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                 if (state is LoadingState) {
                   LoadingWidget.show(context);
                 }
-                if (state is LoggedState) {
+                if (state is LoggedInState) {
                   print("this is the token : " + state.token);
                   /* _codUsuarioController.clear();
                   _passwordController.clear(); */
