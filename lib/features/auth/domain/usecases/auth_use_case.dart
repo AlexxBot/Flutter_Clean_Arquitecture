@@ -1,9 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:sup_transp_app/core/error/failures.dart';
+import 'package:sup_transp_app/core/network/headers.dart';
 import 'package:sup_transp_app/core/usecases/usecase.dart';
 import 'package:sup_transp_app/features/auth/data/models/usuario.dart';
 import 'package:sup_transp_app/features/auth/domain/repositories/auth_repository.dart';
+import 'package:sup_transp_app/injection_container.dart';
 
 abstract class UseCase<Type, Params> {
   //Future<Either<Failure, Type>> login(Params params);
@@ -23,7 +25,9 @@ class AuthUseCase implements UseCase<String, Params> {
 
   @override
   Future<Either<Failure, String>> login(Params params) async {
-    return await repository.login(params.codUsuario, params.password);
+    final token = await repository.login(params.codUsuario, params.password);
+
+    return token;
   }
 }
 

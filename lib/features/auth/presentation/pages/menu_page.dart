@@ -21,6 +21,10 @@ class _MenuPageState extends State<MenuPage> {
           children: [
             ListTile(
               title: Text("Usuarios"),
+            ),
+            ListTile(
+              title: Text("Product"),
+              onTap: () => Navigator.of(context).pushNamed('/product'),
             )
           ],
         )

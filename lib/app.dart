@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'features/auth/presentation/pages/home_page.dart';
 import 'features/auth/presentation/pages/login_page.dart';
+import 'features/mantenimientos/presentation/pages/product/product_list_page.dart';
 
-class SusTransApp extends StatelessWidget {
-  const SusTransApp({Key? key}) : super(key: key);
+class DemoApp extends StatelessWidget {
+  const DemoApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,8 @@ class SusTransApp extends StatelessWidget {
         initialRoute: "/",
         routes: {
           "/": (context) => LoginPage(),
-          "/home": (context) => HomePage()
+          "/home": (context) => HomePage(),
+          "/product": (context) => ProductListPage()
         });
   }
 }

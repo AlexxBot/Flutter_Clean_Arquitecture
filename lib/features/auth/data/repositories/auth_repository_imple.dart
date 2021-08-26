@@ -26,7 +26,7 @@ class AuthRepositoryImpl implements AuthRepository {
     if (await networkInfo.isConnected) {
       try {
         final token = await remoteDataSource.login(codUsuario, password);
-        sl<Headers>().addHeader("x-token", token);
+        sl<Headers>().addHeader('x-access-token', token);
         return Right(token);
       } on ServerException {
         return Left(ServerFailure());

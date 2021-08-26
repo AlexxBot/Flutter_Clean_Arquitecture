@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'app.dart';
 //import 'features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'features/auth/presentation/bloc/auth/auth_bloc.dart';
+import 'features/mantenimientos/presentation/bloc/bloc/product_bloc.dart';
 import 'injection_container.dart' as di;
 import '../../../../injection_container.dart';
 
@@ -28,9 +29,13 @@ class App extends StatelessWidget {
       ],
       child: SusTransApp(),
     ); */
-    return BlocProvider(
-      create: (_) => sl<AuthBloc>(),
-      child: SusTransApp(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(create: (context) => sl<AuthBloc>()),
+        BlocProvider<ProductBloc>(create: (context) => sl<ProductBloc>()),
+      ],
+      /* create: (_) => sl<AuthBloc>(), */
+      child: DemoApp(),
     );
   }
 }

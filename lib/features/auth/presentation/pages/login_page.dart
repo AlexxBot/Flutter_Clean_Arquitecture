@@ -50,11 +50,11 @@ class _LoginPageState extends State<LoginPage> {
                   LoadingWidget.show(context);
                 }
                 if (state is LoggedInState) {
-                  print("this is the token : " + state.token);
+                  //print("this is the token : " + state.token);
                   /* _codUsuarioController.clear();
                   _passwordController.clear(); */
                   LoadingWidget.hide(context);
-                  Navigator.pushNamed(context, '/home');
+                  Navigator.pushNamed(context, '/product');
                 }
                 /* if(state is ErrorState){
 

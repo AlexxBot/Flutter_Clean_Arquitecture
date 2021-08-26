@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:sup_transp_app/core/error/exceptions.dart';
 import 'package:sup_transp_app/core/network/headers.dart';
-import 'package:sup_transp_app/features/auth/data/models/usuario.dart';
+import 'package:sup_transp_app/core/network/network_info.dart';
 import 'package:sup_transp_app/injection_container.dart';
 
 abstract class AuthRemoteData {
@@ -17,8 +17,8 @@ class AuthRemoteDataImpl implements AuthRemoteData {
 
   @override
   Future<String> login(String codUsuario, String password) async {
-    final uri =
-        Uri.parse("https://api-rest-auth-node.herokuapp.com/auth/signin");
+    print('${sl<NetworkInfo>().url}/auth/signin');
+    final uri = Uri.parse('${sl<NetworkInfo>().url}/auth/signin');
     final parametros = {"email": codUsuario, "password": password};
 
     final response = await client.post(uri,

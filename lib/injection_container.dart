@@ -12,6 +12,11 @@ import 'features/auth/data/datasources/auth_remote_data.dart';
 import 'features/auth/data/repositories/auth_repository_imple.dart';
 import 'features/auth/domain/repositories/auth_repository.dart';
 import 'features/auth/presentation/bloc/auth/auth_bloc.dart';
+import 'features/mantenimientos/data/datasources/product_remote_data.dart';
+import 'features/mantenimientos/data/repository/product_repository_imple.dart';
+import 'features/mantenimientos/domain/repository/product_repository.dart';
+import 'features/mantenimientos/domain/usecases/product_use_case.dart';
+import 'features/mantenimientos/presentation/bloc/bloc/product_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -27,6 +32,12 @@ Future<void> init() async {
       random: sl(), */
         ),
   );
+
+  sl.registerFactory(
+    () => ProductBloc(
+      productUseCase: sl(),
+    ),
+  );
   //para los headers que va a a ser configurables prinnipalmente por los tokens
   sl.registerLazySingleton(() => Headers());
 
@@ -35,9 +46,19 @@ Future<void> init() async {
       () => AuthUseCase(sl())); //se inicializa en la primera llamada
   //sl.registerLazySingleton(() => GetRandomNumberTrivia(sl()));
 
+  sl.registerLazySingleton(
+      () => ProductUseCase(sl())); //se inicializa en la primera llamada
+
   // Repository
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
+      //localDataSource: sl(),
+      remoteDataSource: sl(),
+      networkInfo: sl(),
+    ),
+  );
+  sl.registerLazySingleton<ProductRepository>(
+    () => ProductRepositoryImpl(
       //localDataSource: sl(),
       remoteDataSource: sl(),
       networkInfo: sl(),
@@ -49,13 +70,18 @@ Future<void> init() async {
     () => AuthRemoteDataImpl(client: sl()),
   );
 
+  sl.registerLazySingleton<ProductRemoteData>(
+    () => ProductRemoteDataImpl(client: sl()),
+  );
+
   /* sl.registerLazySingleton<NumberTriviaLocalDataSource>(
     () => NumberTriviaLocalDataSourceImpl(sharedPreferences: sl()),
   ); */
 
   //! Core
   sl.registerLazySingleton(() => CryptoConverter());
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(/* sl() */));
+  sl.registerLazySingleton<NetworkInfo>(() =>
+      NetworkInfoImpl(/* sl() */ "https://api-rest-auth-node.herokuapp.com"));
 
   //! External
   //final sharedPreferences = await SharedPreferences.getInstance();
