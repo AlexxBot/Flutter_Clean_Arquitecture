@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sup_transp_app/core/widgets/widgets.dart';
 import 'package:sup_transp_app/features/product/domain/entities/product.dart';
 import 'package:sup_transp_app/features/product/presentation/bloc/bloc/product_bloc.dart';
+import 'package:sup_transp_app/features/product/presentation/widgets/container_image_widget.dart';
 //import 'package:flutter_demo/models/product.dart';
 
 class ProductFormPage extends StatefulWidget {
@@ -31,18 +32,27 @@ class _ProductFormPageState extends State<ProductFormPage> {
     super.initState();
     productBloc = BlocProvider.of<ProductBloc>(context);
     if (widget.id.trim() != '') {
-      print('entro a recuperar por id desde la vista');
       BlocProvider.of<ProductBloc>(context).add(GetEvent(id: widget.id));
     }
-    //productBloc.add(RecuperarEvent(widget.id));
 
-    //authBloc = BlocProvider.of<AuthBloc>(context);
+    _imgURL.addListener(() {
+      BlocProvider.of<ProductBloc>(context).add(GetImage(url: _imgURL.text));
+      /* if (!_imgURL.) {
+        BlocProvider.of<PersonaBloc>(context)
+            .add(RecuperarPersonaEvent(_codPersona.text));
+      } */
+    });
   }
 
   @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _id.dispose();
+    _name.dispose();
+    _category.dispose();
+    _price.dispose();
+    _imgURL.dispose();
   }
 
   void _submit() {
@@ -80,16 +90,31 @@ class _ProductFormPageState extends State<ProductFormPage> {
           listener: (context, state) {
             if (state is SavedState) {
               LoadingWidget.hide(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackWidget(Text("Se guardo correctamente"),
+                    backgroundColor: Theme.of(context).primaryColor),
+              );
             }
             if (state is DeletedState) {
               LoadingWidget.hide(context);
-              print("se elimino correctamente");
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackWidget(Text("Se recupero correctamente")));
             }
             if (state is RetrivedState) {
               LoadingWidget.hide(context);
-              print(' se recupero correctamente');
               _fillForm(state.product);
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackWidget(Text("Se recupero correctamente")));
+              /* ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: const Text('se recupero correctamente'),
+                duration: const Duration(seconds: 1),
+                action: SnackBarAction(
+                  label: 'ACTION',
+                  onPressed: () {},
+                ),
+              )); */
             }
+            //esto deberia de manejarse aqui , pero debido a que en el ancestro ya se condiciona este estado, ya no es necesario duplicar su logica
             /* if (state is LoadingState) {
               LoadingWidget.show(context);
               //este listener ya esta el widget padre ya no necesario volver a preguntar
@@ -98,19 +123,26 @@ class _ProductFormPageState extends State<ProductFormPage> {
           },
           child: Form(
             child: ListView(padding: EdgeInsets.all(15), children: [
-              TextFormField(
-                  readOnly: true,
-                  decoration: InputDecoration(hintText: "id"),
-                  controller: _id),
-              TextFormField(
-                  decoration: InputDecoration(hintText: "name"),
-                  controller: _name),
-              TextFormField(
-                  decoration: InputDecoration(hintText: "category"),
-                  controller: _category),
+              Visibility(
+                visible: false,
+                child: TextFormField(
+                    readOnly: true,
+                    decoration: InputDecoration(),
+                    controller: _id),
+              ),
               TextFormField(
                   decoration:
-                      InputDecoration(hintText: "price", prefixText: "\u0024 "),
+                      InputDecoration(hintText: "name", labelText: "Name"),
+                  controller: _name),
+              TextFormField(
+                  decoration: InputDecoration(
+                      hintText: "category", labelText: "Category"),
+                  controller: _category),
+              TextFormField(
+                  decoration: InputDecoration(
+                      hintText: "price",
+                      prefixText: "\u0024 ",
+                      labelText: "Price"),
                   controller: _price,
                   //inputFormatters: [FilteringTextInputFormatter.allow()],
                   keyboardType: TextInputType.number,
@@ -118,17 +150,35 @@ class _ProductFormPageState extends State<ProductFormPage> {
                     FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}'))
                   ]),
               TextFormField(
-                  maxLines: 2,
-                  decoration: InputDecoration(hintText: "imgURL"),
-                  controller: _imgURL)
+                maxLines: 2,
+                keyboardType: TextInputType.multiline,
+                decoration: InputDecoration(hintText: "imgURL"),
+                controller: _imgURL,
+              ),
+              Container(
+                  padding: EdgeInsets.only(top: 30),
+                  height: 300,
+                  child: Center(
+                    child: BlocBuilder<ProductBloc, ProductState>(
+                        builder: (context, state) {
+                      if (state is RetrivedState)
+                        return ContainerImage(
+                          url: state.product.imgURL,
+                          /* height: 200, */
+                        );
+                      else {
+                        return Text("No image Provided");
+                      }
+                    }),
+                  ))
             ]),
           ),
         )),
         bottomNavigationBar: Container(
             color: Colors.transparent,
-            height: 100,
+            height: 80,
             child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ButtonWidget(

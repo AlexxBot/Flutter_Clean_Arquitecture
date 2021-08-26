@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sup_transp_app/core/widgets/loading-widget.dart';
+import 'package:sup_transp_app/core/widgets/loading_widget.dart';
 import 'package:sup_transp_app/features/auth/presentation/pages/menu_page.dart';
 import 'package:sup_transp_app/features/product/data/datasources/product_remote_data.dart';
 import 'package:sup_transp_app/features/product/domain/entities/product.dart';
 
 import 'package:sup_transp_app/features/product/presentation/bloc/bloc/product_bloc.dart';
 import 'package:sup_transp_app/features/product/presentation/pages/product/product_form_page.dart';
+import 'package:sup_transp_app/features/product/presentation/widgets/product_list_widget.dart';
 
 import '../../../../../injection_container.dart';
 
@@ -37,7 +38,7 @@ class _ProductListPageState extends State<ProductListPage> {
   }
 
   Future<Null> _handleRefresh() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
     BlocProvider.of<ProductBloc>(context).add(ListEvent());
     /* productsFuture = sl<ProductRemoteData>().getList();
     return productsFuture; */
@@ -148,79 +149,3 @@ class _ProductListPageState extends State<ProductListPage> {
   }
 }
 
-class ProductList extends StatelessWidget {
-  final List<Product> products;
-  const ProductList({Key? key, required this.products}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scrollbar(
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          return /* ListTile(
-            title: Text(this.products[index].name),
-            subtitle: Text(this.products[index].category),
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (productContext) =>
-                      /* BlocProvider<ProductBloc>(
-                      create: (context) =>
-                          BlocProvider.of<ProductBloc>(context),
-                      child:  */
-                      ProductFormPage(
-                        id: this.products[index].id,
-                      )),
-              /* ) */
-            ),
-          ); */
-              Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (productContext) => ProductFormPage(
-                              id: this.products[index].id,
-                            )));
-              },
-              child: Container(
-                height: 300,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black,
-                        offset: Offset(0, 5),
-                        blurRadius: 10,
-                        spreadRadius: 2)
-                  ],
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10)),
-                  color: Colors.white,
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                        flex: 5,
-                        child: Container(
-                            decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(products[index].imgURL),
-                              fit: BoxFit.contain),
-                        ))),
-                    Expanded(child: Center(child: Text(products[index].name)))
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-        itemCount: products.length,
-      ),
-    );
-  }
-}

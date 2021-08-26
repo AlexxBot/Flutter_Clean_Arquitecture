@@ -35,3 +35,10 @@ class GetEvent extends ProductEvent {
 class ListEvent extends ProductEvent {
   const ListEvent();
 }
+
+class GetImageEvent extends ProductEvent {
+  final String url;
+  const GetImageEvent({required this.url});
+  @override
+  List<Object> get props => [url];
+}

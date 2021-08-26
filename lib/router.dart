@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sup_transp_app/features/auth/presentation/pages/login_page.dart';
 import 'package:sup_transp_app/features/product/presentation/pages/product/product_list_page.dart';
 import 'features/auth/presentation/pages/home_page.dart';
-import 'features/product/presentation/pages/product/product_page.dart';
 
 class RouteGenerator {
-
   static const String loginPage = '/';
   static const String homePage = '/home';
   static const String productPage = '/product';
@@ -32,7 +30,6 @@ class RouteGenerator {
   }
 }
 
-// 5.
 class RouteException implements Exception {
   final String message;
   const RouteException(this.message);

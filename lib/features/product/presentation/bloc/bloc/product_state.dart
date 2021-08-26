@@ -53,3 +53,8 @@ class ErrorState extends ProductState {
   final String message;
   ErrorState({required this.message});
 }
+
+class RetrivedImageState extends ProductState {
+  final File file;
+  const RetrivedImageState({required this.file});
+}

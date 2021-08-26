@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
@@ -7,6 +9,8 @@ import 'package:sup_transp_app/core/error/failures.dart';
 import 'package:sup_transp_app/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:sup_transp_app/features/product/domain/entities/product.dart';
 import 'package:sup_transp_app/features/product/domain/usecases/product_use_case.dart';
+
+import 'package:http/http.dart' as http;
 
 part 'product_event.dart';
 part 'product_state.dart';
@@ -41,6 +45,16 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       yield LoadingState();
       final failureOrDeleted = await productUseCase.delete(event.id);
       yield* _eitherDeletedOrErrorState(failureOrDeleted);
+    }
+
+    if (event is GetImageEvent) {
+      final http.Response responseData = await http.get(Uri.parse(event.url));
+      final uint8list = responseData.bodyBytes;
+      var buffer = uint8list.buffer;
+      ByteData byteData = ByteData.view(buffer);
+      var tempDir = await getTemporaryDirectory();
+      File file = await File('${tempDir.path}/img').writeAsBytes(
+          buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
     }
   }
 
