@@ -21,8 +21,9 @@ class AuthRemoteDataImpl implements AuthRemoteData {
     final uri = Uri.parse('${sl<NetworkInfo>().url}/auth/signin');
     final parametros = {"email": codUsuario, "password": password};
 
-    final response = await client.post(uri,
-        headers: sl<Headers>().headers, body: jsonEncode(parametros));
+    final response = await client
+        .post(uri, headers: sl<Headers>().headers, body: jsonEncode(parametros))
+        .timeout(Duration(seconds: 5));
     if (response.statusCode == 200) {
       final usuarioJson = jsonDecode(response.body);
       return usuarioJson["token"];

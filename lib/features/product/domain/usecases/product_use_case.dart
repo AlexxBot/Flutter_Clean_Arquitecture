@@ -4,8 +4,8 @@ import 'package:sup_transp_app/core/error/failures.dart';
 import 'package:sup_transp_app/core/usecases/usecase.dart';
 import 'package:sup_transp_app/features/auth/data/models/usuario.dart';
 import 'package:sup_transp_app/features/auth/domain/repositories/auth_repository.dart';
-import 'package:sup_transp_app/features/mantenimientos/domain/entities/product.dart';
-import 'package:sup_transp_app/features/mantenimientos/domain/repository/product_repository.dart';
+import 'package:sup_transp_app/features/product/domain/entities/product.dart';
+import 'package:sup_transp_app/features/product/domain/repository/product_repository.dart';
 
 abstract class UseCase {
   //Future<Either<Failure, Type>> login(Params params);

@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:sup_transp_app/core/error/exceptions.dart';
 import 'package:sup_transp_app/core/network/headers.dart';
 import 'package:sup_transp_app/core/network/network_info.dart';
-import 'package:sup_transp_app/features/mantenimientos/domain/entities/product.dart';
+import 'package:sup_transp_app/features/product/domain/entities/product.dart';
 import 'package:sup_transp_app/injection_container.dart';
 
 abstract class ProductRemoteData {

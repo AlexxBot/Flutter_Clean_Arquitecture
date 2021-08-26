@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'app.dart';
 //import 'features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'features/auth/presentation/bloc/auth/auth_bloc.dart';
-import 'features/mantenimientos/presentation/bloc/bloc/product_bloc.dart';
+import 'features/product/presentation/bloc/bloc/product_bloc.dart';
 import 'injection_container.dart' as di;
 import '../../../../injection_container.dart';
 

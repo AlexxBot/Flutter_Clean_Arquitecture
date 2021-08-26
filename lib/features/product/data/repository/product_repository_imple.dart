@@ -2,9 +2,9 @@ import 'package:sup_transp_app/core/error/exceptions.dart';
 import 'package:sup_transp_app/core/error/failures.dart';
 import 'package:dartz/dartz.dart';
 import 'package:sup_transp_app/core/network/network_info.dart';
-import 'package:sup_transp_app/features/mantenimientos/data/datasources/product_remote_data.dart';
-import 'package:sup_transp_app/features/mantenimientos/domain/entities/product.dart';
-import 'package:sup_transp_app/features/mantenimientos/domain/repository/product_repository.dart';
+import 'package:sup_transp_app/features/product/data/datasources/product_remote_data.dart';
+import 'package:sup_transp_app/features/product/domain/entities/product.dart';
+import 'package:sup_transp_app/features/product/domain/repository/product_repository.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
   final ProductRemoteData remoteDataSource;

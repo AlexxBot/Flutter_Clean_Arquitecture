@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sup_transp_app/core/widgets/widgets.dart';
-import 'package:sup_transp_app/features/mantenimientos/domain/entities/product.dart';
-import 'package:sup_transp_app/features/mantenimientos/presentation/bloc/bloc/product_bloc.dart';
+import 'package:sup_transp_app/features/product/domain/entities/product.dart';
+import 'package:sup_transp_app/features/product/presentation/bloc/bloc/product_bloc.dart';
 //import 'package:flutter_demo/models/product.dart';
 
 class ProductFormPage extends StatefulWidget {
@@ -90,7 +90,9 @@ class _ProductFormPageState extends State<ProductFormPage> {
               print(' se recupero correctamente');
               _fillForm(state.product);
             }
-            /* if (state is LoadingState) { //este listener ya esta el widget padre ya no necesario volver a preguntar 
+            /* if (state is LoadingState) {
+              LoadingWidget.show(context);
+              //este listener ya esta el widget padre ya no necesario volver a preguntar
               print("esta cargando");
             } */
           },
@@ -107,7 +109,8 @@ class _ProductFormPageState extends State<ProductFormPage> {
                   decoration: InputDecoration(hintText: "category"),
                   controller: _category),
               TextFormField(
-                  decoration: InputDecoration(hintText: "price"),
+                  decoration:
+                      InputDecoration(hintText: "price", prefixText: "\u0024 "),
                   controller: _price,
                   //inputFormatters: [FilteringTextInputFormatter.allow()],
                   keyboardType: TextInputType.number,
@@ -115,6 +118,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                     FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}'))
                   ]),
               TextFormField(
+                  maxLines: 2,
                   decoration: InputDecoration(hintText: "imgURL"),
                   controller: _imgURL)
             ]),

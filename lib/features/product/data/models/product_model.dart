@@ -1,4 +1,4 @@
-import 'package:sup_transp_app/features/mantenimientos/domain/entities/product.dart';
+import 'package:sup_transp_app/features/product/domain/entities/product.dart';
 
 class ProductModel extends Product {
   ProductModel(

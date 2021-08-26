@@ -5,8 +5,8 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:sup_transp_app/core/error/failures.dart';
 import 'package:sup_transp_app/features/auth/presentation/bloc/auth/auth_bloc.dart';
-import 'package:sup_transp_app/features/mantenimientos/domain/entities/product.dart';
-import 'package:sup_transp_app/features/mantenimientos/domain/usecases/product_use_case.dart';
+import 'package:sup_transp_app/features/product/domain/entities/product.dart';
+import 'package:sup_transp_app/features/product/domain/usecases/product_use_case.dart';
 
 part 'product_event.dart';
 part 'product_state.dart';

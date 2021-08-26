@@ -12,17 +12,22 @@ import 'features/auth/data/datasources/auth_remote_data.dart';
 import 'features/auth/data/repositories/auth_repository_imple.dart';
 import 'features/auth/domain/repositories/auth_repository.dart';
 import 'features/auth/presentation/bloc/auth/auth_bloc.dart';
-import 'features/mantenimientos/data/datasources/product_remote_data.dart';
-import 'features/mantenimientos/data/repository/product_repository_imple.dart';
-import 'features/mantenimientos/domain/repository/product_repository.dart';
-import 'features/mantenimientos/domain/usecases/product_use_case.dart';
-import 'features/mantenimientos/presentation/bloc/bloc/product_bloc.dart';
+import 'features/product/data/datasources/product_remote_data.dart';
+import 'features/product/data/repository/product_repository_imple.dart';
+import 'features/product/domain/repository/product_repository.dart';
+import 'features/product/domain/usecases/product_use_case.dart';
+import 'features/product/presentation/bloc/bloc/product_bloc.dart';
+
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
   //! Features - Number Trivia
   // Bloc
+  //await DotEnv.(fileName: ".env");
+  await dotenv.load(fileName: ".env");
+
   sl.registerFactory(
     () => AuthBloc(
         authUseCase: sl(),
@@ -80,8 +85,9 @@ Future<void> init() async {
 
   //! Core
   sl.registerLazySingleton(() => CryptoConverter());
-  sl.registerLazySingleton<NetworkInfo>(() =>
-      NetworkInfoImpl(/* sl() */ "https://api-rest-auth-node.herokuapp.com"));
+  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(
+      /* sl() */ /* "https://api-rest-auth-node.herokuapp.com" */ dotenv
+          .env['URL']!));
 
   //! External
   //final sharedPreferences = await SharedPreferences.getInstance();

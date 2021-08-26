@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'features/auth/presentation/pages/home_page.dart';
-import 'features/auth/presentation/pages/login_page.dart';
-import 'features/mantenimientos/presentation/pages/product/product_list_page.dart';
+import 'package:sup_transp_app/router.dart';
 
 class DemoApp extends StatelessWidget {
   const DemoApp({Key? key}) : super(key: key);
@@ -21,11 +18,12 @@ class DemoApp extends StatelessWidget {
           accentColor: Color(0Xff0971E8),
           backgroundColor: Colors.transparent,
         ),
-        initialRoute: "/",
-        routes: {
+        initialRoute: RouteGenerator.loginPage,
+        /* routes: {
           "/": (context) => LoginPage(),
           "/home": (context) => HomePage(),
           "/product": (context) => ProductListPage()
-        });
+        } */
+        onGenerateRoute: RouteGenerator.generateRoute);
   }
 }
