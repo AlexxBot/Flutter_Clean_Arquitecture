@@ -1,4 +1,4 @@
-# sup_transp_app
+# Flutter clean architecture demo
 
 A new Flutter project.
 
