@@ -36,7 +36,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
     }
 
     _imgURL.addListener(() {
-      BlocProvider.of<ProductBloc>(context).add(GetImage(url: _imgURL.text));
+      //BlocProvider.of<ProductBloc>(context).add(GetImage(url: _imgURL.text));
       /* if (!_imgURL.) {
         BlocProvider.of<PersonaBloc>(context)
             .add(RecuperarPersonaEvent(_codPersona.text));

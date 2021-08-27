@@ -47,7 +47,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       yield* _eitherDeletedOrErrorState(failureOrDeleted);
     }
 
-    if (event is GetImageEvent) {
+    /* if (event is GetImageEvent) {
       final http.Response responseData = await http.get(Uri.parse(event.url));
       final uint8list = responseData.bodyBytes;
       var buffer = uint8list.buffer;
@@ -55,7 +55,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       var tempDir = await getTemporaryDirectory();
       File file = await File('${tempDir.path}/img').writeAsBytes(
           buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-    }
+    } */
   }
 
   Stream<ProductState> _eitherListedOrErrorState(
